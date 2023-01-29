@@ -63,4 +63,4 @@ def addEvent():
     return render_template("eventDetails.html")
 
 if __name__ == "__main__":
-    app.run(debug=True, host='192.168.1.29')
+    app.run(debug=False, host='0.0.0.0')
