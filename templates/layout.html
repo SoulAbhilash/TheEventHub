@@ -5,48 +5,20 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.png') }}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/484828eb2f.js" crossorigin="anonymous"></script>
+        
         {% block style %}
         {% endblock %}
         <title>Events</title>
     </head>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container">
-          <a class="navbar-brand d-xs-block py-3" href="#">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" height="40" alt="Company Logo">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-       
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mx-auto">
-              <li class="nav-item">
-                <a class="nav-link mx-2 active" aria-current="page" href=liveEvents>Events Live</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-2" href="#">Clubs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-2" href="#">Credits</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-2 btn rounded-7 btn-danger" href=addEvent>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                    Host Event
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    
     <body>
-        <div class="container">
-            {% block content %}{% endblock %}
-        </div>
+      {% include 'navbar.html' %}    
+      {% block content %}{% endblock %}
+        
         
     </body>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -55,6 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         {% block script %}
         {% endblock %}

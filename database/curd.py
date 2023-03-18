@@ -1,24 +1,34 @@
 import firebase_admin
-from firebase_admin import credentials, db
+from firebase_admin import credentials, db, storage
 from eventDetails import Event
-from dataclasses import asdict
 
 class FireBase:
     def __init__(self) -> None:
         cred = credentials.Certificate("database\\firebase_sdk.json")
         firebase_admin.initialize_app(
             cred,
-            {"databaseURL": "https://eventhub-be9ba-default-rtdb.asia-southeast1.firebasedatabase.app/"}
+            {
+                "databaseURL": "https://eventhub-be9ba-default-rtdb.asia-southeast1.firebasedatabase.app/",
+                "storageBucket": "eventhub-be9ba.appspot.com"
+                }
             )
-        self.database = db.reference()
+        self.eventDatabase = db.reference("Events")
+        self.bucket = storage.bucket()
         
-    def addEvent(self, eventDetails: Event):
-        event_count = self.database.child("LiveEvents").get() 
-        update_event_count = event_count + 1
-        self.database.update(
-            {"LiveEvents": update_event_count}
-        )
-        self.database.child(f"Events/{update_event_count}").set(asdict(eventDetails))       
+    def addEvent(self, eventDetails: dict, eventId: int):
+        #self.__storeImage(eventDetails.poster)
+        # print("----------------------------------------------------")
+        # print(eventDetails)
+        self.eventDatabase.child(f"{eventId}").set(eventDetails)      
     
-    def getEvent(self):
-        return self.database.child("Events").get()
+    def getEvents(self):
+        print("\n[Getting Events]")
+        print(self.eventDatabase.get())
+        return self.eventDatabase.get()
+    
+    # def __storeImage(self, filepath):
+    #     blob = self.bucket.blob(filepath)
+    #     blob.upload_from_filename(filepath)
+        
+    def getEvent(self, id):
+        return self.eventDatabase.child("Events").child(id).get()

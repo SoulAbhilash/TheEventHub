@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand d-xs-block py-3" href="#">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" height="40" alt="Company Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+   
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link mx-2 active" aria-current="page" href=liveEvents>Events Live</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="#">Clubs</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link mx-2" href="#">Credits</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link mx-2 btn rounded-7 btn-danger" href=addEvent>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                Host Event
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

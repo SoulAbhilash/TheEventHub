@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from eventDetails import Event
 from database.curd import FireBase
-from json import dumps
+from random import randint
+import smtplib, ssl
+from dataclasses import asdict
 
 app = Flask(__name__)
 firebase = FireBase()
@@ -21,7 +23,7 @@ posts = [
     }
 ]
 
-dummyEvent = Event(
+"""dummyEvent = Event(
     "Codezilla",
     ["Abhilash", "RA2111003020423", "7358482354"],
     ["Abhilash", "RA2111003020423", "7358482354"],
@@ -33,23 +35,22 @@ dummyEvent = Event(
     "5:00",
     "Auditorium",
     "No OD sry!"
-)
+)"""
 
 @app.route("/")
 @app.route("/liveEvents")
 def liveEvents():
     #firebase.addEvent(dummyEvent)
-    print(firebase.getEvent()[1:])
-    return render_template("liveEvents.html", events=firebase.getEvent()[1:])
+    print(type(firebase.getEvents()))
+    return render_template("liveEvents.html", events=firebase.getEvents())
 
 @app.route('/addEvent', methods=["GET","POST"])
-def addEvent():
+def getEvent():
     if request.method == "POST":
+        #image = request.form.get("poster", False)
         eventDetails = Event(
             club_name = request.form["club_name"],
-            student1 = [request.form["student1_name"], request.form["student1_regno"], request.form["student1_mobile"]],
-            student2 = [request.form["student2_name"], request.form["student2_regno"], request.form["student2_mobile"]],
-            poster = request.form["poster"],
+            poster = "no image",
             event_name = request.form["event_name"],
             event_details = request.form["event_details"],
             register_before = request.form["register_before"],
@@ -58,9 +59,27 @@ def addEvent():
             venue = request.form["venue"],
             od_details = request.form["od"]
             )
-        firebase.addEvent(eventDetails)
+        #firebase.addEvent(eventDetails)
+        print("\n---------------------------------------------------------")
+        print(asdict(eventDetails))
+        print("\n---------------------------------------------------------")
+        return redirect(url_for('deletePin', event = asdict(eventDetails)))
+    return render_template("getEvent.html")
+
+@app.route('/eventDetails')
+def eventDetails():
+    event = firebase.getEvent("2")
+    return render_template("eventDetails.html", event=event)
+
+@app.route('/deletePin', methods=["GET","POST"])
+def deletePin():
+    pin = randint(1111, 9999)
+    if request.method == "POST":
+        event = request.args.get("event")
+        firebase.addEvent(eval(event), pin)
         return redirect(url_for('liveEvents'))
-    return render_template("eventDetails.html")
+        
+    return render_template("deletePin.html", pin=pin)
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True)
