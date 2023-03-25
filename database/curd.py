@@ -19,11 +19,10 @@ class FireBase:
         #self.__storeImage(eventDetails.poster)
         # print("----------------------------------------------------")
         # print(eventDetails)
-        self.eventDatabase.child(f"{eventId}").set(eventDetails)      
+        self.eventDatabase.child(f"{eventId}").set(eventDetails)   
+        return "Event added"   
     
     def getEvents(self):
-        print("\n[Getting Events]")
-        print(self.eventDatabase.get())
         return self.eventDatabase.get()
     
     # def __storeImage(self, filepath):
@@ -31,4 +30,11 @@ class FireBase:
     #     blob.upload_from_filename(filepath)
         
     def getEvent(self, id):
-        return self.eventDatabase.child("Events").child(id).get()
+        return self.eventDatabase.child(id).get()
+    
+    def deleteEvetn(self, id):
+        self.eventDatabase.child(id).delete()
+        return "Event Deleted"
+
+if __name__ == "__main__":
+    FireBase()

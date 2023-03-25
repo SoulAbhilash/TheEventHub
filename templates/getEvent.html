@@ -24,6 +24,20 @@
             <div class="mb-3">
                 <input type="text" placeholder="Club Name" oninput="this.className = ''" name="club_name">
             </div>
+            <div class="mb-3">
+                <input type="email" placeholder="abc@email.com" oninput="this.className = ''" name="club_email">
+                <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > don't worry we will not spam :) </label>
+            </div>
+
+            <div class="mb-3">
+                <input type="tel" placeholder="mobile number" oninput="this.className = ''" name="contact">
+                <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > it will be safe with us </label>
+            </div>
+
+            <div class="mb-3">
+                <input type="url" placeholder="registraion link" oninput="this.className = ''" name="register_link">
+            </div>
+
         </div>
     
         <!-- step two -->
@@ -117,7 +131,7 @@
                 document.getElementById("prevBtn").style.display = "inline";          
             }          
             if (n == (x.length - 1)) {            
-                document.getElementById("nextBtn").innerHTML = "Get Code";          
+                document.getElementById("nextBtn").innerHTML = "Post Event";          
             } else {            
                 document.getElementById("nextBtn").innerHTML = "Next";          
             }          

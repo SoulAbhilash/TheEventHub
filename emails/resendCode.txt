@@ -1,0 +1,14 @@
+Hi [Recipient's Name],
+
+Thank you for your request to resend the event deletion verification code. We have located the previous verification code associated with your event post and are resending it to you. Please use the code below to continue with the deletion process:
+
+Event Deletion Verification Code: [code here]
+
+Once you enter the code, your event post will be permanently deleted from our platform.
+
+If you did not request a new event deletion verification code or have any questions, please let us know as soon as possible.
+
+Thank you for using our services.
+
+Best regards,
+TheEventHub

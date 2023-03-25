@@ -1,49 +1,51 @@
 {% extends "layout.html" %}
     {% block content %}
-        {% for event in events.keys() %}
-        <div class="container">
-            <div class="row">
-                <div class="col-10">
-                    <div class="card mt-3 tab-card">
-                        <div class="card-header tab-card-header">
-                            <ul class="nav nav-tabs card-header-tabs w-100 d-flex justify-content-between" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link p-2" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">
-                                        {{ events[event]["club_name"] }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <button type="button" id="{{ event }}" onclick="onDeleteButton('one-tab', this.id)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        <i class="fa-sharp fa-solid fa-trash" 
-                                        style="color:#aaaaaa;"></i>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-          
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                                <h5 class="card-title">
-                                    {{ events[event]["event_name"] }}
-                                </h5>
-                                <p class="card-text">
-                                    {{ events[event]["event_details"] }}
-                                </p>
-                                <div class="row">
-                                    <small class="text-muted col-5">
-                                        Register Before: {{ events[event]["register_before"] }}
-                                    </small>   
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href=eventDetails class="btn btn-primary btn-sm">Details</a>
+        {% if events %}
+            {% for event in events.keys() %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card mt-3 tab-card">
+                            <div class="card-header tab-card-header">
+                                <ul class="nav nav-tabs card-header-tabs w-100 d-flex justify-content-between" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-2" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">
+                                            {{ events[event]["club_name"] }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button type="button" id="{{ event }}" onclick="onDeleteButton('one-tab', this.id)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="fa-sharp fa-solid fa-trash" 
+                                            style="color:#aaaaaa;"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+            
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+                                    <h5 class="card-title">
+                                        {{ events[event]["event_name"] }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ events[event]["event_details"] }}
+                                    </p>
+                                    <div class="row">
+                                        <small class="text-muted col-5">
+                                            Register Before: {{ events[event]["register_before"] }}
+                                        </small>   
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ url_for('eventDetails', id=event) }}" class="btn btn-primary btn-sm">Details</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}   
+            {% endfor %}
+        {% endif %}  
         
   <!-- Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -56,17 +58,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="" id="delete-pin">
+          <form action="" id="delete-pin" method="post">
             <div class="container">
                 <div class="mx-auto h6"> PIN </div>
                 <input type="text" class="form-control">
                 <small class="text-muted text-info my-3"> Don't remember? 
-                    <a href="">resend code</a></small>
+                    <a href="" id="resend-btn" onclick="onResend()">resend code</a></small>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Delete</button>
+          <button type="button" class="btn btn-primary " id="modal-delete" data-bs-dismiss="modal" aria-label="Close" >Delete</button>
         </div>
       </div>
     </div>
@@ -74,11 +76,13 @@
     {% endblock content %}
 
     {% block script %}
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
         <script>
+            var cardId = "0"
             function onDeleteButton(event_id, btn_id) {
+                cardId = btn_id
                 var modalTitle = document.getElementById("exampleModalLongTitle");
                 var title = modalTitle.textContent || modalTitle.innerHTML;
-                alert(title.length);
                 var node = document.getElementById(event_id);
                 var text = node.textContent || node.innerHTML;
                 if(title.length == 0){
@@ -86,6 +90,38 @@
                     modalTitle.appendChild(content);
                 }
             }
+
+            $('#resend-btn').click(function() {
+                $.ajax({
+                    url: '/resendCode',
+                    type: 'POST',
+                    data: {'cardId': cardId},
+                    success: function(response) {
+                    },
+                });
+            });
+
+            $('#modal-delete').click(function() {
+                $("#deleteModal").modal("hide");
+                $.ajax({
+                    url: '/liveEvents',
+                    type: 'POST',
+                    data: {'cardId': cardId},
+                    success: function(response) {
+                    },
+                });
+            });
+
+            // function toDetails(id) {
+            //     $.ajax({
+            //         url: '/eventDetails',
+            //         type: 'POST',
+            //         data: {'cardId': id},
+            //         success: function(response) {
+            //         },
+            //     });
+            // };
+            
 
             var myModal = new bootstrap.Modal(document.getElementById("#deleteModal"));
             myModal.show();

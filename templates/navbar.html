@@ -8,25 +8,25 @@
       </button>
    
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link mx-2 active" aria-current="page" href=liveEvents>Events Live</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="#">Clubs</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link mx-2" href="#">Credits</a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link mx-2 btn rounded-7 btn-danger" href=addEvent>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                Host Event
-            </a>
-          </li>
-        </ul>
+          <ul class="navbar-nav" style="margin-left: auto;">
+            <li class="nav-item">
+              <a class="nav-link mx-2 active" aria-current="page" href="{{ url_for('liveEvents') }}">Events Live</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link mx-2" href="#">Clubs</a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a class="nav-link mx-2" href="#">Credits</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link mx-2 btn rounded-7 btn-danger" href="{{ url_for('addEvent') }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  Host Event
+              </a>
+            </li>
+          </ul>
       </div>
     </div>
   </nav>

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+    {% block style %}
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='deletePin.css') }}">
+    {% endblock %}
+    {% block content %}
+    <form action="" method="post">
+        <div class="deletewrap d-flex justify-content-center my-5">
+            <div class="card w-50 delete-content border border-dark shadow p-5 bg-white rounded">
+                <div class="h2 mx-auto">
+                    Congratulations!
+                </div>
+                Your event post is now live on our website. We're excited to help promote your event and share it with our audience.
+                <p class="mt-5">
+                    Here's the unique code that you can use to edit or delete your event post: 
+                    <br>
+                    <div class="mx-auto h5">
+                            <b>{{ pin }}</b>
+
+                    </div>
+                    
+                </p>
+                <div>
+                    <p>
+                        Check your registered email id for for more information.
+                        <br>
+                        <label class="text-muted">
+                            {{email}}
+                        </label>
+                    </p>
+                </div>
+               
+                <p>
+                    Thank you for choosing our website to promote your event. We wish you all the best and hope your event is a great success!
+                </p>
+                
+            </div>
+        </div>
+    </form>    
+    {% endblock %}
