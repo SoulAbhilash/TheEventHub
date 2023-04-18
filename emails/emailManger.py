@@ -12,7 +12,7 @@ class EmailManger:
                 "code_pos": 4
             },
             "eventCreated": {
-                "filename": "emails\eventCreated_Msg.txt",
+                "filename": "emails\eventCreated.txt",
                 "subject": "Event Sucessfully Created - TheEventHub",
                 "code_pos": 6
             }
@@ -76,7 +76,7 @@ class EmailManger:
         self.email["Subject"] = self.files[file]["subject"]
         body = self.getMessage(name=userName, code=deleteCode, file=file)          
         self.email.set_content(body)
-        self.sendMail(reciever=reciever)
+        self.sendMail(reciever)
         
 
 if __name__ == "__main__":

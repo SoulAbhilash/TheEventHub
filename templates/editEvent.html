@@ -23,20 +23,20 @@
         <div class="step">
             <p class="text-center mb-4">Details of Host</p>
             <div class="mb-3">
-                <input type="text" placeholder="Club Name" oninput="this.className = ''" name="club_name">
+                <input type="text" value="{{ event.club_name }}" oninput="this.className = ''" name="club_name">
             </div>
             <div class="mb-3">
-                <input type="email" placeholder="abc@email.com" oninput="this.className = ''" name="club_email">
-                <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > don't worry we will not spam :) </label>
-            </div>
-
-            <div class="mb-3">
-                <input type="tel" placeholder="mobile number" oninput="this.className = ''" name="contact">
-                <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > it will be safe with us </label>
+                <input type="email" value="{{ event.club_email }}" oninput="this.className = ''" name="club_email">
+                <!-- <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > don't worry we will not spam :) </label> -->
             </div>
 
             <div class="mb-3">
-                <input type="url" placeholder="registraion link" oninput="this.className = ''" name="register_link">
+                <input type="tel" value="{{ event.contact }}" oninput="this.className = ''" name="contact">
+                <!-- <label class="text-muted mt-1 ms-3" style="font-size: smaller;" > it will be safe with us </label> -->
+            </div>
+
+            <div class="mb-3">
+                <input type="url" value="{{ event.register_link|safe }}" oninput="this.className = ''" name="register_link">
             </div>
 
         </div>
@@ -44,15 +44,15 @@
         <!-- step two -->
         <div class="step">
             <p class="text-center mb-4">Event Details</p>
+            <!-- <div class="mb-3">
+                
+            </div> -->
             <div class="mb-3">
-                {% include 'uploadPoster.html' %}
-            </div>
-            <div class="mb-3">
-                <input type="text" placeholder="Event Name" oninput="this.className = ''" name="event_name">
+                <input type="text" value="{{ event.event_name }}" oninput="this.className = ''" name="event_name">
             </div>
             <div class="mb-3">
                 <div class="form-outline mb-4">
-                    <textarea class="form-control" placeholder="Event details" id="form4Example3" rows="4" name="event_details"></textarea>
+                    <textarea class="form-control" value="{{ event.event_details }}" id="form4Example3" rows="4" name="event_details"></textarea>
                   </div>
             </div>
             <div class="mb-3">
@@ -60,7 +60,7 @@
                         <div style="width: 50%;" class="align-self-center">
                             Register Before :
                         </div>
-                            <input id="mydate" type="date" class="form-control getdate" data-date-format="dd/mm/yyyy" name="register_before">
+                            <input id="mydate" type="date" value="{{ event.register_before }}" class="form-control getdate" data-date-format="dd/mm/yyyy" name="register_before">
                     </div>
                     
                 <div class="bdc" style="position:relative"></div>
@@ -75,6 +75,7 @@
                         Event Date
                     </div>
                     <input id="mydate" 
+                    value="{{ event.date }}"
                     type="date" 
                     class="form-control getdate" 
                     data-date-format="dd/mm/yyyy"
@@ -96,39 +97,40 @@
                     class="form-control getdate" 
                     style="width: 75%;"
                     oninput="this.className = ''"
+                    value="{{ event.event_time }}"
                     name="event_time">
                 </div>
             </div>
             <div class="mb-3">
-                <input type="text" placeholder="Venue" oninput="this.className = ''" name="venue">
+                <input type="text" value="{{ event.venue }}" oninput="this.className = ''" name="venue">
             </div>
             <div class="mb-3">
-                <input type="text" placeholder="OD Details" oninput="this.className = ''" name="od">
+                <input type="text" value="{{ event.od_details}}" oninput="this.className = ''" name="od">
             </div>
         </div>
 
         <!-- step four -->
         <div class="step">
             <div class="mb-3">
-                <input type="text" oninput="this.className" placeholder="Insta ID" name="insta" 
+                <input type="text" oninput="this.className" value="{{ event.insta }}" name="insta" 
                 style="border: 2px solid transparent;
                 border-radius: 50px;
                 border-image: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
                 border-image-slice: 1;">
             </div>
             <div class="mb-3">
-                <input type="url" placeholder="Website URL" oninput="this.className = ''" name="web"
+                <input type="url" value="{{ event.website }}" oninput="this.className = ''" name="web"
                 style="border:2px solid black; border-radius: 0%;"
                 >
             </div>
             <div class="mb-3">
-                <input type="text" placeholder="Facebook ID" oninput="this.className = ''" name="fb"
+                <input type="text" value="{{ event.fb }}" oninput="this.className = ''" name="fb"
                 style="border: 2px solid #4267B2; border-radius: 0%;"
                 >
             </div>
     
             <div class="mb-3">
-                <input type="url" placeholder="Twitter ID" oninput="this.className = ''" name="twitter"
+                <input type="url" value="{{ event.twitter }}" oninput="this.className = ''" name="twitter"
                 style="border:2px solid #1DA1F2; border-radius: 0%;"
                 >
             </div>

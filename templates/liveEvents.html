@@ -14,10 +14,16 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <button type="button" id="{{ event }}" onclick="onDeleteButton('one-tab', this.id)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                            <i class="fa-sharp fa-solid fa-trash" 
-                                            style="color:#aaaaaa;"></i>
-                                        </button>
+                                        <div class="d-flex">
+                                            <!-- <button type="button" id="{{ event }}" onclick="onEditButton('one-tab', this.id)" class="btn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                <i class="fas fa-edit" 
+                                                style="color:#aaaaaa;"></i>
+                                            </button> -->
+                                            <button type="button" id="{{ event }}" onclick="onDeleteButton('one-tab', this.id)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                                <i class="fa-sharp fa-solid fa-trash" 
+                                                style="color:#aaaaaa;"></i>
+                                            </button>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -45,14 +51,18 @@
                 </div>
             </div>
             {% endfor %}
+        {% else %}
+            <div class="mx-auto">
+                No Events Happening. Come again later :)
+            </div>
         {% endif %}  
         
-  <!-- Modal -->
+  <!-- Modal for delete-->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+          <h5 class="modal-title" id="deleteModalTitle"></h5>
           <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close">
             <!-- <span aria-hidden="true">&times;</span> -->
           </button>
@@ -73,6 +83,33 @@
       </div>
     </div>
   </div> 
+
+    <!-- Modal for EdiT-->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalTitle"></h5>
+              <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close">
+                <!-- <span aria-hidden="true">&times;</span> -->
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="" id="delete-pin" method="post">
+                <div class="container">
+                    <div class="mx-auto h6"> PIN </div>
+                    <input type="text" class="form-control">
+                    <small class="text-muted text-info my-3"> Don't remember? 
+                        <a href="" id="resend-btn" onclick="onResend()">resend code</a></small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary " id="modal-edit" data-bs-dismiss="modal" aria-label="Close" >Edit</button>
+            </div>
+          </div>
+        </div>
+      </div> 
     {% endblock content %}
 
     {% block script %}
@@ -81,12 +118,24 @@
             var cardId = "0"
             function onDeleteButton(event_id, btn_id) {
                 cardId = btn_id
-                var modalTitle = document.getElementById("exampleModalLongTitle");
+                var modalTitle = document.getElementById("deleteModalTitle");
                 var title = modalTitle.textContent || modalTitle.innerHTML;
                 var node = document.getElementById(event_id);
                 var text = node.textContent || node.innerHTML;
                 if(title.length == 0){
-                    var content = document.createTextNode("Event Delete: " + text);
+                    var content = document.createTextNode("Delete: " + text);
+                    modalTitle.appendChild(content);
+                }
+            }
+
+            function onEditButton(event_id, btn_id) {
+                cardId = btn_id
+                var modalTitle = document.getElementById("editModalTitle");
+                var title = modalTitle.textContent || modalTitle.innerHTML;
+                var node = document.getElementById(event_id);
+                var text = node.textContent || node.innerHTML;
+                if(title.length == 0){
+                    var content = document.createTextNode("Edit: " + text);
                     modalTitle.appendChild(content);
                 }
             }
@@ -110,20 +159,17 @@
                     success: function(response) {
                     },
                 });
-            });
-
-            // function toDetails(id) {
-            //     $.ajax({
-            //         url: '/eventDetails',
-            //         type: 'POST',
-            //         data: {'cardId': id},
-            //         success: function(response) {
-            //         },
-            //     });
-            // };
+            }); 
             
-
-            var myModal = new bootstrap.Modal(document.getElementById("#deleteModal"));
-            myModal.show();
+            $('#modal-edit').click(function() {
+                $.ajax({
+                    url: `/editEvent`,
+                    type: 'POST',
+                    data: {'cardId': cardId},
+                    success: function(response) {
+                    },
+                });
+            }); 
+            
         </script>
     {% endblock %}

@@ -14,6 +14,11 @@ class Event:
     od_details: str
     register_link: str
     contact: str
+    insta: str
+    website: str
+    fb: str
+    twitter: str
+    id: str
     
 if __name__ == '__main__':
     Event()

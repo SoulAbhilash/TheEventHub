@@ -4,6 +4,8 @@ from random import randint
 
 # installed
 from flask import Flask, jsonify, redirect, render_template, request, url_for, session
+import logging
+from logging.handlers import RotatingFileHandler
 
 # My classes
 from database.curd import FireBase
@@ -14,6 +16,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'my_secret_key_here'
 firebase = FireBase()
 emailManager = EmailManger()
+
+app.logger.setLevel(logging.DEBUG)
+
+# Add a rotating file handler to log to a file
+handler = RotatingFileHandler('myapp.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.DEBUG)
+app.logger.addHandler(handler)
 
 posts = [
     {
@@ -63,10 +72,13 @@ def addEvent():
     session['event_created'] = False
     if request.method == "POST":
         eventCreated = True
+        poster_file = request.files["poster"]
+        imgUrl = firebase.generatePosterUrl(upload_file= poster_file)
+        id = str(randint(1111, 9999))
         eventDetails = Event(
             club_name=request.form["club_name"],
             club_email=request.form["club_email"],
-            poster="no image",
+            poster=imgUrl,
             event_name=request.form["event_name"],
             event_details=request.form["event_details"],
             register_before=request.form["register_before"],
@@ -75,10 +87,13 @@ def addEvent():
             venue=request.form["venue"],
             od_details=request.form["od"],
             register_link=request.form["register_link"],
-            contact=request.form["contact"]
+            contact=request.form["contact"],
+            insta=request.form["insta"],
+            website=request.form["web"],
+            fb=request.form["fb"],
+            twitter=request.form["twitter"],
+            id = id
         )
-
-        id = str(randint(1111, 9999))
         
         firebase.addEvent( asdict(eventDetails), id) 
         return redirect(
@@ -93,7 +108,7 @@ def addEvent():
     return render_template("getEvent.html")
 
 
-@app.route('/eventDetails/<id>', methods=["GET"])
+@app.route('/eventDetails/<id>', methods=["GET", "POST"])
 def eventDetails(id):
     event = firebase.getEvent(id)
     return render_template("eventDetails.html", event=event)
@@ -116,7 +131,7 @@ def eventCreated():
     return redirect(url_for("liveEvents"))
 
 
-@app.route('/resendCode', methods=['POST'])
+@app.route('/resendCode', methods=["GET", 'POST'])
 def resendCode():
     id = request.form.get('cardId')
     details = firebase.getEvent(id)
@@ -127,6 +142,15 @@ def resendCode():
     )
     return jsonify({'message': 'Code resent successfully'})
 
+@app.route('/editEvent', methods=['GET', 'POST'])
+def editEvent():
+    id = request.form.get('cardId')
+    details = firebase.getEvent(str(id))
+    print(id , details['id'])
+    if str(details['id']) == str(id):
+        print("hi")
+        return render_template("editEvent.html", event = details)
+    return jsonify({'message': 'Code resent successfully'})
 
 if __name__ == "__main__":
     app.run(debug=True)

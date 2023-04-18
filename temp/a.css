@@ -1,60 +1,160 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+*{
+   font-family: 'Poppins', sans-serif;
+   margin:0; padding:0;
+   box-sizing: border-box;
+   outline: none; border:none;
+   text-decoration: none;
+}
+
+:root{
+   --maincolor:#f6f8fa;
+   --darkblack:#2d2f31;
+   --darkgrey:#61666b;
+   --grey:#d5d5d5;
+   --lightgrey:#f2f2f2;
+   --yellow:#fecb40;
+   --red:#df113c;
+}
+
+header{
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   z-index: 99;
+   background-color: #2d2f31;
+
+}
+.nav{
+
+   margin: auto;
+   width: 100%;
+   height: 50px;
+   display: flex;
+   align-items: center;
+}
+.logo{
+   position: fixed;
+   background-color:red;
+   color: black;
+   width: 100%;
+   text-align: center;
+   padding: 10px 350px 15px 60px;
+   top: 0;
+   z-index: 2;
+}
+.dasboard-order{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 365px;
+    height: 100vh;
+    padding: 20px;
+    background-color: var(--maincolor);
+    box-shadow: 0 1px 4px rgba(40,37,37,0.1);
+    z-index: 3;
+ 
+    
+  }
+
+
+
+
+
+.row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -16px;
+    padding-top: 50px;
+  }
+  
+  .col-25 {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+  }
+  
+  .col-50 {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+  }
+  
+  .col-75 {
+    -ms-flex: 75%; /* IE10 */
+    flex: 75%;
+  }
+  
+  .col-25,
+  .col-50,
+  .col-75 {
+    padding: 0px 16px;
+  }
+  
+  .container {
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    margin-left: 10%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 50%;
+    height: fit-content;
+  }
+
+  .payment-inputs{
+    margin-top: 17%;
+  }
+  
+  input[type=text] {
     width: 100%;
-    height: 100%;
-}
-
-html {
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  label {
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+  }
+  
+  .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
     width: 100%;
-    height: 100%;
-}
-
-.navbar-transparent {
-   background-color: transparent;
-   background: transparent;
-   border-color: transparent;
-}
-
-@media(min-width:767px) {
-    .navbar {
-        padding: 20px 0;
-        -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
-        -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
-        transition: background .5s ease-in-out,padding .5s ease-in-out;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+  }
+  
+  .btn:hover {
+    background-color: #45a049;
+  }
+  
+  span.price {
+    float: right;
+    color: grey;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+  @media (max-width: 800px) {
+    .row {
+      flex-direction: column-reverse;
     }
-
-    .top-nav-collapse {
-        padding: 0;
+    .col-25 {
+      margin-bottom: 20px;
     }
-}
-
-/* Demo Sections - You can use these as guides or delete them - the scroller will work with any sort of height, fixed, undefined, or percentage based.
-The padding is very important to make sure the scrollspy picks up the right area when scrolled to. Adjust the margin and padding of sections and children 
-of those sections to manage the look and feel of the site. */
-
-.intro-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #fff;
-}
-
-.about-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #eee;
-}
-
-.services-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #fff;
-}
-
-.contact-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #eee;
-}
+  }
